@@ -18,7 +18,8 @@ enum
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
 	ON_EXPOSE = 12,
-	ON_DESTROY = 17
+	ON_DESTROY = 17,
+	ON_RESIZE = 25
 };
 
 enum
