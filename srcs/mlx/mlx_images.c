@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_images.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lalex <lalex@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/29 01:10:29 by lalex             #+#    #+#             */
+/*   Updated: 2022/03/29 01:13:52 by lalex            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long_mlx.h"
 
 static t_img	*process_image(t_mlx *mlx, t_img *img)
@@ -43,7 +55,8 @@ t_img	*load_xpm_image(t_mlx *mlx, char *path, int code)
 	if (!img)
 		return (NULL);
 	img->code = code;
-	img->img = mlx_xpm_file_to_image(mlx->mlx, path, &(img->w_h.x), &(img->w_h.y));
+	img->img = mlx_xpm_file_to_image(mlx->mlx,
+			path, &(img->w_h.x), &(img->w_h.y));
 	return (process_image(mlx, img));
 }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_so_long.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lalex <lalex@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/29 01:09:54 by lalex             #+#    #+#             */
+/*   Updated: 2022/03/29 01:38:20 by lalex            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,48 +27,17 @@ static int	init_images(t_so_long *sl)
 		return (-1);
 	lst_size = ft_lstsize(sl->mlx->images);
 	load_xpm_image(sl->mlx, HERO_IMG, I_HERO_CODE);
-	if (ft_lstsize(sl->mlx->images) == lst_size)
-	{
-		ft_printf("Error\n%s\n", MLX_IMG_ERR);
-		return (-1);
-	}
-	lst_size++;
 	load_xpm_image(sl->mlx, WALL_IMG, I_WALL_CODE);
-	if (ft_lstsize(sl->mlx->images) == lst_size)
-	{
-		ft_printf("Error\n%s\n", MLX_IMG_ERR);
-		return (-1);
-	}
-	lst_size++;
 	load_xpm_image(sl->mlx, EMPTY_IMG, I_EMPTY_CODE);
-	if (ft_lstsize(sl->mlx->images) == lst_size)
-	{
-		ft_printf("Error\n%s\n", MLX_IMG_ERR);
-		return (-1);
-	}
-	lst_size++;
 	load_xpm_image(sl->mlx, COLL_IMG, I_COLL_CODE);
-	if (ft_lstsize(sl->mlx->images) == lst_size)
-	{
-		ft_printf("Error\n%s\n", MLX_IMG_ERR);
-		return (-1);
-	}
-	lst_size++;
 	load_xpm_image(sl->mlx, ENEMY_IMG, I_ENEMY_CODE);
-	if (ft_lstsize(sl->mlx->images) == lst_size)
-	{
-		ft_printf("Error\n%s\n", MLX_IMG_ERR);
-		return (-1);
-	}
-	lst_size++;
 	load_xpm_image(sl->mlx, EXIT_IMG, I_EXIT_CODE);
-	if (ft_lstsize(sl->mlx->images) == lst_size)
+	if (ft_lstsize(sl->mlx->images) < lst_size + 6)
 	{
 		ft_printf("Error\n%s\n", MLX_IMG_ERR);
 		return (-1);
 	}
 	return (0);
-	// sl->hero->icon = create_new_image(sl->mlx)
 }
 
 static void	clean_up(t_so_long *sl)
@@ -66,7 +47,8 @@ static void	clean_up(t_so_long *sl)
 	if (sl->hero)
 		free(sl->hero);
 	if (sl->mlx)
-		clear_mlx(sl->mlx->mlx);
+		clear_mlx(sl->mlx);
+	free(sl);
 }
 
 t_so_long	*init_so_long(char *map_path)
@@ -82,7 +64,7 @@ t_so_long	*init_so_long(char *map_path)
 	sl->map = read_map(map_path);
 	if (sl->map == NULL)
 	{
-		free(sl);
+		clean_up(sl);
 		return (NULL);
 	}
 	sl->hero = init_hero(sl->map);
@@ -91,18 +73,10 @@ t_so_long	*init_so_long(char *map_path)
 		clean_up(sl);
 		return (NULL);
 	}
-	sl->mlx = start_mlx_win((t_pos){.x = WIDTH, .y = HEIGHT}, TITLE);
-	if (sl->mlx == NULL)
+	sl->mlx = start_mlx_win(WIDTH, HEIGHT, TITLE);
+	if (sl->mlx == NULL || init_images(sl))
 	{
 		clean_up(sl);
-		return (NULL);
-	}
-	if (init_images(sl))
-	{
-		delete_map(sl->map);
-		free(sl->hero);
-		clear_mlx(sl->mlx);
-		free(sl);
 		return (NULL);
 	}
 	return (sl);

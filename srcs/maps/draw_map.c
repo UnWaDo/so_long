@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lalex <lalex@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/29 01:10:06 by lalex             #+#    #+#             */
+/*   Updated: 2022/03/29 01:16:33 by lalex            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long_map.h"
 #include "so_long_hero.h"
 
@@ -10,22 +22,21 @@ static void	put_img(t_img *canvas, t_img *img, t_pos corner)
 
 	if (!img || canvas->w_h.x < img->w_h.x || canvas->w_h.y < img->w_h.y)
 		return ;
-	scaler = (t_pos){.x = CELL_WIDTH / img->w_h.x, .y = CELL_WIDTH / img->w_h.y};
-	canvas_loc.y = corner.y;
+	scaler = (t_pos){.x = CELL_WIDTH / img->w_h.x,
+		.y = CELL_WIDTH / img->w_h.y};
 	img_loc.y = 0;
 	while (img_loc.y < img->w_h.y)
 	{
-		canvas_loc.x = corner.x;
 		img_loc.x = 0;
 		while (img_loc.x < img->w_h.x)
 		{
+			canvas_loc.x = corner.x + img_loc.x * scaler.x;
+			canvas_loc.y = corner.y + img_loc.y * scaler.y;
 			pix = get_pixel(img, img_loc);
 			if (pix)
 				put_rect(canvas, canvas_loc, scaler, pix);
-			canvas_loc.x += scaler.x;
 			img_loc.x++;
 		}
-		canvas_loc.y += scaler.y;
 		img_loc.y++;
 	}
 }

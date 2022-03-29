@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_init.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lalex <lalex@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/29 01:10:32 by lalex             #+#    #+#             */
+/*   Updated: 2022/03/29 01:18:28 by lalex            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long_mlx.h"
 #include "so_long_utils.h"
 #include "ft_printf.h"
 
-t_mlx	*start_mlx_win(t_pos w_h, char *title)
+t_mlx	*start_mlx_win(int w, int h, char *title)
 {
 	t_mlx	*mlx;
 
@@ -19,11 +31,10 @@ t_mlx	*start_mlx_win(t_pos w_h, char *title)
 		free(mlx);
 		return (NULL);
 	}
-	mlx->win = mlx_new_window(mlx->mlx, w_h.x, w_h.y, title);
+	mlx->win = mlx_new_window(mlx->mlx, w, h, title);
 	if (mlx->win == NULL)
 	{
 		ft_printf("Error\n%s\n", MLX_WIN_ERR);
-		mlx_destroy_display(mlx->mlx);
 		free(mlx);
 		return (NULL);
 	}

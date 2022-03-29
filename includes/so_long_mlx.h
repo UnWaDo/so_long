@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   so_long_mlx.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lalex <lalex@students.21-school.ru>        +#+  +:+       +#+        */
+/*   By: lalex <lalex@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 23:24:44 by lalex             #+#    #+#             */
-/*   Updated: 2022/01/03 18:34:24 by lalex            ###   ########.fr       */
+/*   Updated: 2022/03/29 01:18:19 by lalex            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_img
 	t_pos	w_h;
 }	t_img;
 
-enum	IMG_CODES
+enum	e_IMG_CODES
 {
 	I_MAP_CODE,
 	I_HERO_CODE,
@@ -65,7 +65,7 @@ void	put_pixel(t_img *img, t_pos pos, int c);
 int		get_pixel(t_img *img, t_pos pos);
 void	put_rect(t_img *img, t_pos corner, t_pos w_h, int c);
 void	fill_color(t_img *img, int c);
-t_mlx	*start_mlx_win(t_pos w_h, char *title);
+t_mlx	*start_mlx_win(int w, int h, char *title);
 t_img	*create_new_image(t_mlx *mlx, t_pos w_h, int code);
 t_img	*load_xpm_image(t_mlx *mlx, char *path, int code);
 t_img	*get_loaded_img(t_list *lst, int code);

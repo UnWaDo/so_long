@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_utils.h                                    :+:      :+:    :+:   */
+/*   mlx_clear.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalex <lalex@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/27 23:24:44 by lalex             #+#    #+#             */
-/*   Updated: 2022/03/29 01:09:26 by lalex            ###   ########.fr       */
+/*   Created: 2022/03/29 01:13:07 by lalex             #+#    #+#             */
+/*   Updated: 2022/03/29 01:13:09 by lalex            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_UTILS_H
-# define SO_LONG_UTILS_H
+#include "so_long_mlx.h"
 
-enum
+void	clear_mlx(t_mlx *mlx)
 {
-	ON_KEYDOWN = 2,
-	ON_KEYUP = 3,
-	ON_EXPOSE = 12,
-	ON_DESTROY = 17,
-	ON_RESIZE = 25
-};
+	t_list	*el;
+	t_list	*next;
 
-enum
-{
-	KEYCODE_ENTER = 65293,
-	KEYCODE_ESCAPE = 65307,
-	KEYCODE_W = 119,
-	KEYCODE_A = 97,
-	KEYCODE_S = 115,
-	KEYCODE_D = 100,
-	KEYCODE_SPACE = 32
-};
-
-typedef struct s_pos
-{
-	int	x;
-	int	y;
-}	t_pos;
-
-#endif
+	if (mlx == NULL)
+		return ;
+	el = mlx->images;
+	while (el)
+	{
+		next = el->next;
+		mlx_destroy_image(mlx->mlx, ((t_img *)(el->content))->img);
+		free(el->content);
+		free(el);
+		el = next;
+	}
+	if (mlx->win)
+		mlx_destroy_window(mlx->mlx, mlx->win);
+	free(mlx);
+}

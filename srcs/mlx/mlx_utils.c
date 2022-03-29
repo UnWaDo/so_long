@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lalex <lalex@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/29 01:10:34 by lalex             #+#    #+#             */
+/*   Updated: 2022/03/29 01:12:12 by lalex            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long_mlx.h"
 
 int	to_trgb(unsigned char t,
@@ -46,27 +58,4 @@ void	put_rect(t_img *img, t_pos corner, t_pos w_h, int c)
 void	fill_color(t_img *img, int c)
 {
 	put_rect(img, (t_pos){.x = 0, .y = 0}, img->w_h, c);
-}
-
-void	clear_mlx(t_mlx *mlx)
-{
-	t_list	*el;
-	t_list	*next;
-
-	if (mlx == NULL)
-		return ;
-	el = mlx->images;
-	while (el)
-	{
-		next = el->next;
-		mlx_destroy_image(mlx->mlx, ((t_img *)(el->content))->img);
-		free(el->content);
-		free(el);
-		el = next;
-	}
-	if (mlx->win)
-		mlx_destroy_window(mlx->mlx, mlx->win);
-	if (mlx->mlx)
-		mlx_destroy_display(mlx->mlx);
-	free(mlx);
 }
