@@ -24,11 +24,11 @@ NAME			=	so_long
 OBJECTS			=	$(SOURCES:.c=.o)
 IFLAGS			=	$(addprefix -I,$(LIBFT_PATH) $(PRINTF_PATH) $(INCLUDES) $(HEADERS_MLX))
 CFLAGS			=	-g -Wall -Wextra -Werror# -fsanitize=address
-LFLAGS			=	-Lmlx -lmlx -framework OpenGL -framework AppKit
+LFLAGS			=	-L/usr/X11/lib -lX11 -lXext
 .PHONY:			all clean fclean re norm
 
 $(NAME):	$(OBJECTS) $(PRINTF) $(MLX)
-	$(CC) $(CFLAGS) $(OBJECTS) $(PRINTF) $(LFLAGS) -o $(NAME) $(IFLAGS)
+	$(CC) $(CFLAGS) $(OBJECTS) $(PRINTF) $(MLX) $(LFLAGS) -o $(NAME) $(IFLAGS)
 
 all:		$(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: lalex <lalex@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 01:09:54 by lalex             #+#    #+#             */
-/*   Updated: 2022/03/29 01:38:20 by lalex            ###   ########.fr       */
+/*   Updated: 2022/03/29 04:17:08 by lalex            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,9 @@ t_so_long	*init_so_long(char *map_path)
 		return (NULL);
 	}
 	sl->map = read_map(map_path);
-	if (sl->map == NULL)
-	{
-		clean_up(sl);
-		return (NULL);
-	}
-	sl->hero = init_hero(sl->map);
-	if (sl->hero == NULL)
+	if (sl->map)
+		sl->hero = init_hero(sl->map);
+	if (sl->map == NULL || sl->hero == NULL)
 	{
 		clean_up(sl);
 		return (NULL);
