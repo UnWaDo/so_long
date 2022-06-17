@@ -44,7 +44,8 @@ enum	e_IMG_CODES
 	I_EMPTY_CODE,
 	I_COLL_CODE,
 	I_ENEMY_CODE,
-	I_EXIT_CODE
+	I_EXIT_CODE,
+	I_BACKG_CODE
 };
 
 # define MLX_ALLOC_ERR	"MLX allocation failed"
@@ -58,13 +59,15 @@ enum	e_IMG_CODES
 # define COLL_IMG		"imgs/bag_coins.xpm"
 # define ENEMY_IMG		"imgs/goblin.xpm"
 # define EXIT_IMG		"imgs/flag_red.xpm"
+# define BACKG_IMG		"imgs/terrain.xpm"
 
 int		to_trgb(unsigned char t,
 			unsigned char r, unsigned char g, unsigned char b);
 void	put_pixel(t_img *img, t_pos pos, int c);
 int		get_pixel(t_img *img, t_pos pos);
 void	put_rect(t_img *img, t_pos corner, t_pos w_h, int c);
-void	fill_color(t_img *img, int c);
+void	put_img(t_img *canvas, t_img *img, t_pos corner);
+void	fill_with_img(t_img *canvas, t_img *img);
 t_mlx	*start_mlx_win(int w, int h, char *title);
 t_img	*create_new_image(t_mlx *mlx, t_pos w_h, int code);
 t_img	*load_xpm_image(t_mlx *mlx, char *path, int code);

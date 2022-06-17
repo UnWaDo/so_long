@@ -13,41 +13,10 @@
 #include "so_long_map.h"
 #include "so_long_hero.h"
 
-static void	put_img(t_img *canvas, t_img *img, t_pos corner)
-{
-	t_pos	canvas_loc;
-	t_pos	img_loc;
-	t_pos	scaler;
-	int		pix;
-
-	if (!img || canvas->w_h.x < img->w_h.x || canvas->w_h.y < img->w_h.y)
-		return ;
-	scaler = (t_pos){.x = CELL_WIDTH / img->w_h.x,
-		.y = CELL_WIDTH / img->w_h.y};
-	img_loc.y = 0;
-	while (img_loc.y < img->w_h.y)
-	{
-		img_loc.x = 0;
-		while (img_loc.x < img->w_h.x)
-		{
-			canvas_loc.x = corner.x + img_loc.x * scaler.x;
-			canvas_loc.y = corner.y + img_loc.y * scaler.y;
-			pix = get_pixel(img, img_loc);
-			if (pix)
-				put_rect(canvas, canvas_loc, scaler, pix);
-			img_loc.x++;
-		}
-		img_loc.y++;
-	}
-}
-
 static void	put_object(t_mlx *mlx, t_img *img, t_pos loc, int code)
 {
-	t_pos	w_h;
-
-	w_h = (t_pos){.x = CELL_WIDTH, .y = CELL_WIDTH};
-	loc.x *= w_h.x;
-	loc.y *= w_h.y;
+	loc.x *= CELL_WIDTH;
+	loc.y *= CELL_WIDTH;
 	put_img(img, get_loaded_img(mlx->images, I_EMPTY_CODE), loc);
 	if (code == HERO_CODE)
 		put_img(img, get_loaded_img(mlx->images, I_HERO_CODE), loc);
@@ -111,7 +80,7 @@ void	draw_map(t_mlx *mlx, t_map *map)
 	t_pos	hero;
 	char	code;
 
-	fill_color(map->canvas, BG_COLOR);
+	fill_with_img(map->canvas, get_loaded_img(mlx->images, I_BACKG_CODE));
 	hero = get_hero_pos(map);
 	start = get_start(map, map->canvas->w_h, hero);
 	end = get_end(map, map->canvas->w_h, hero);

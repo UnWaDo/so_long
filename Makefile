@@ -1,7 +1,7 @@
 SOURCES_MAIN	=	main.c init_so_long.c so_long_exit.c system.c
 SOURCES_MAP		=	map.c init_map.c map_lines.c draw_map.c check_map.c
 SOURCES_HERO	=	hero.c init_hero.c
-SOURCES_MLX		=	mlx_init.c mlx_utils.c mlx_images.c mlx_clear.c
+SOURCES_MLX		=	mlx_init.c mlx_utils.c mlx_images.c mlx_clear.c mlx_pixels.c
 SOURCES_FN		=	$(addprefix main/,$(SOURCES_MAIN)) \
 					$(addprefix maps/,$(SOURCES_MAP)) \
 					$(addprefix hero/,$(SOURCES_HERO)) \
@@ -19,12 +19,13 @@ HEADERS_MLX		=	$(addprefix $(MLX_PATH),mlx.h)
 HEADERS_SO_LONG	=	so_long.h so_long_map.h so_long_hero.h \
 					so_long_mlx.h so_long_utils.h
 HEADERS			=	$(addprefix $(INCLUDES),$(HEADERS_SO_LONG)) \
-					$(HEADERS_LIB) $(HEADERS_PRINTF)
+					$(HEADERS_LIB) $(HEADERS_PRINTF) $(HEADERS_MLX)
 NAME			=	so_long
 OBJECTS			=	$(SOURCES:.c=.o)
-IFLAGS			=	$(addprefix -I,$(LIBFT_PATH) $(PRINTF_PATH) $(INCLUDES) $(HEADERS_MLX))
+X11_PATH		=	/usr/lib/X11/
+IFLAGS			=	$(addprefix -I,$(LIBFT_PATH) $(PRINTF_PATH) $(INCLUDES) $(MLX_PATH))
 CFLAGS			=	-g -Wall -Wextra -Werror# -fsanitize=address
-LFLAGS			=	-Lmlx -lmlx -framework OpenGL -framework AppKit
+LFLAGS			=	-Lmlx -lmlx -lX11 -lXext
 .PHONY:			all clean fclean re norm
 
 $(NAME):	$(OBJECTS) $(PRINTF) $(MLX)
