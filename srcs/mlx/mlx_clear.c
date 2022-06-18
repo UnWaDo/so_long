@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_clear.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lalex <lalex@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lalex <lalex@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 01:13:07 by lalex             #+#    #+#             */
-/*   Updated: 2022/03/29 01:13:09 by lalex            ###   ########.fr       */
+/*   Updated: 2022/06/18 20:06:08 by lalex            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ void	clear_mlx(t_mlx *mlx)
 	}
 	if (mlx->win)
 		mlx_destroy_window(mlx->mlx, mlx->win);
-	if (mlx->mlx)
-	{
-		mlx_destroy_display(mlx->mlx);
-		free(mlx->mlx);
-	}
-	free(mlx);
+	if (mlx)
+		free(mlx);
 }
