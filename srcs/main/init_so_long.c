@@ -32,7 +32,8 @@ static int	init_images(t_so_long *sl)
 	load_xpm_image(sl->mlx, COLL_IMG, I_COLL_CODE);
 	load_xpm_image(sl->mlx, ENEMY_IMG, I_ENEMY_CODE);
 	load_xpm_image(sl->mlx, EXIT_IMG, I_EXIT_CODE);
-	if (ft_lstsize(sl->mlx->images) < lst_size + 6)
+	load_xpm_image(sl->mlx, BACKG_IMG, I_BACKG_CODE);
+	if (ft_lstsize(sl->mlx->images) < lst_size + 7)
 	{
 		ft_printf("Error\n%s\n", MLX_IMG_ERR);
 		return (-1);
@@ -51,7 +52,7 @@ static void	clean_up(t_so_long *sl)
 	free(sl);
 }
 
-t_so_long	*init_so_long(char *map_path)
+static t_so_long	*create_so_long(char *map_path)
 {
 	t_so_long	*sl;
 
@@ -69,6 +70,16 @@ t_so_long	*init_so_long(char *map_path)
 		clean_up(sl);
 		return (NULL);
 	}
+	return (sl);
+}
+
+t_so_long	*init_so_long(char *map_path)
+{
+	t_so_long	*sl;
+
+	sl = create_so_long(map_path);
+	if (!sl)
+		return (NULL);
 	sl->mlx = start_mlx_win(WIDTH, HEIGHT, TITLE);
 	if (sl->mlx == NULL || init_images(sl))
 	{

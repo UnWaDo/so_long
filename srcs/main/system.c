@@ -28,7 +28,7 @@ void	game_over(t_hero *hero)
 	}
 	else
 	{
-		ft_printf("Sorry to see you leave\n");
+		ft_printf("Sorry to see you leaving\n");
 		ft_printf("It was a nice time together!\n");
 		ft_printf("Goodbye!\n");
 	}

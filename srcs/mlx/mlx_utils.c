@@ -11,51 +11,66 @@
 /* ************************************************************************** */
 
 #include "so_long_mlx.h"
-
-int	to_trgb(unsigned char t,
-		unsigned char r, unsigned char g, unsigned char b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
-}
-
-void	put_pixel(t_img *img, t_pos pos, int c)
-{
-	char	*dst;
-
-	if (pos.x < 0 || pos.y < 0 || pos.x > img->w_h.x || pos.y > img->w_h.y)
-		return ;
-	dst = img->addr + (pos.y * img->line_len + pos.x * (img->bpp / 8));
-	((unsigned int *)dst)[0] = c;
-}
-
-int	get_pixel(t_img *img, t_pos pos)
-{
-	char	*dst;
-
-	if (pos.x < 0 || pos.y < 0 || pos.x > img->w_h.x || pos.y > img->w_h.y)
-		return (0);
-	dst = img->addr + (pos.y * img->line_len + pos.x * (img->bpp / 8));
-	return (((unsigned int *)dst)[0]);
-}
+#include "so_long_map.h"
 
 void	put_rect(t_img *img, t_pos corner, t_pos w_h, int c)
 {
-	t_pos	till;
+	t_pos	loc;
 
-	till = (t_pos){.x = corner.x + w_h.x, .y = corner.y + w_h.y};
-	while (corner.y < till.y)
+	loc.y = corner.y;
+	while (loc.y < corner.y + w_h.y)
 	{
-		while (corner.x < till.x)
+		loc.x = corner.x;
+		while (loc.x < corner.x + w_h.x)
 		{
-			put_pixel(img, corner, c);
-			corner.x++;
+			put_pixel(img, loc, c);
+			loc.x++;
 		}
-		corner.x -= w_h.x;
-		corner.y++;
+		loc.y++;
 	}
 }
 
-void	fill_color(t_img *img, int c)
+void	put_img(t_img *canvas, t_img *img, t_pos corner)
 {
-	put_rect(img, (t_pos){.x = 0, .y = 0}, img->w_h, c);
+	t_pos	canvas_loc;
+	t_pos	img_loc;
+	t_pos	scaler;
+	int		pix;
+
+	if (!img || canvas->w_h.x < img->w_h.x || canvas->w_h.y < img->w_h.y)
+		return ;
+	scaler = (t_pos){.x = CELL_WIDTH / img->w_h.x,
+		.y = CELL_WIDTH / img->w_h.y};
+	img_loc.y = 0;
+	while (img_loc.y < img->w_h.y)
+	{
+		img_loc.x = 0;
+		while (img_loc.x < img->w_h.x)
+		{
+			canvas_loc.x = corner.x + img_loc.x * scaler.x;
+			canvas_loc.y = corner.y + img_loc.y * scaler.y;
+			pix = get_pixel(img, img_loc);
+			if (pix)
+				put_rect(canvas, canvas_loc, scaler, pix);
+			img_loc.x++;
+		}
+		img_loc.y++;
+	}
+}
+
+void	fill_with_img(t_img *canvas, t_img *img)
+{
+	t_pos	loc;
+
+	loc.y = 0;
+	while (loc.y < canvas->w_h.y)
+	{
+		loc.x = 0;
+		while (loc.x < canvas->w_h.x)
+		{
+			put_img(canvas, img, loc);
+			loc.x += CELL_WIDTH;
+		}
+		loc.y += CELL_WIDTH;
+	}
 }

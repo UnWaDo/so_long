@@ -50,6 +50,6 @@ void	delete_map(t_map *map);
 # define EXIT_CODE		'E'
 # define ENEMY_CODE		'R'
 
-# define BG_COLOR		0101202202
+# define BG_COLOR		0055110110
 
 #endif
