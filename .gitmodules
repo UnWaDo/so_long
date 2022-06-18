@@ -1,6 +1,0 @@
-[submodule "ft_printf"]
-	path = ft_printf
-	url = git@github.com:UnWaDo/ft_printf.git
-[submodule "mlx"]
-	path = mlx
-	url = git@github.com:42Paris/minilibx-linux.git
