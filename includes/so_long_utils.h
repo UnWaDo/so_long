@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_utils.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lalex <lalex@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lalex <lalex@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 23:24:44 by lalex             #+#    #+#             */
-/*   Updated: 2022/03/29 01:09:26 by lalex            ###   ########.fr       */
+/*   Updated: 2022/06/18 17:11:50 by lalex            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ enum
 
 enum
 {
-	KEYCODE_ENTER = 65293,
-	KEYCODE_ESCAPE = 65307,
-	KEYCODE_W = 119,
-	KEYCODE_A = 97,
-	KEYCODE_S = 115,
-	KEYCODE_D = 100,
-	KEYCODE_SPACE = 32
+	KEYCODE_ENTER = 36,
+	KEYCODE_ESCAPE = 53,
+	KEYCODE_W = 13,
+	KEYCODE_A = 0,
+	KEYCODE_S = 1,
+	KEYCODE_D = 2,
+	KEYCODE_SPACE = 49
 };
 
 typedef struct s_pos

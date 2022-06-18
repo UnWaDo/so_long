@@ -25,7 +25,7 @@ OBJECTS			=	$(SOURCES:.c=.o)
 X11_PATH		=	/usr/lib/X11/
 IFLAGS			=	$(addprefix -I,$(LIBFT_PATH) $(PRINTF_PATH) $(INCLUDES) $(MLX_PATH))
 CFLAGS			=	-g -Wall -Wextra -Werror# -fsanitize=address
-LFLAGS			=	-Lmlx -lmlx -lX11 -lXext
+LFLAGS			=	-Lmlx -lmlx -framework OpenGL -framework AppKit
 .PHONY:			all clean fclean re norm
 
 $(NAME):	$(OBJECTS) $(PRINTF) $(MLX)
